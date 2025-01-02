@@ -5,6 +5,7 @@ import { GetStations } from "../lib/RetrieveData";
 import { Station } from "../lib/StationData";
 import { Searchbar } from "./Searchbar";
 import { StationList } from "./StationList";
+import { MapChart } from "./map";
 
 export default function Page() {
     const [stations, setStations] = useState<Station[]>([]);
@@ -20,6 +21,7 @@ export default function Page() {
 
     return (
         <div>
+            <MapChart />
             <Searchbar onSearchChange={setSearchTerm} />
             <StationList stations={stations} />
         </div>

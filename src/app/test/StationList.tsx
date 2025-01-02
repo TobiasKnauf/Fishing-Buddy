@@ -9,7 +9,7 @@ export const StationList: FC<StationListProps> = ({ stations }) => {
     return (
         <ul>
             {stations.map((station) => (
-                <li key={station.uuid}>{station.longname}</li>
+                <li key={station.uuid}>{station.longname},{station.latitude},{station.longitude}</li>
             ))}
         </ul>
     );
