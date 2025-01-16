@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { Station } from "../lib/StationData";
 
-interface StationListProps {
+interface Props {
     stations: Station[];
 }
 
-export const StationList: FC<StationListProps> = ({ stations }) => {
+export const StationList: FC<Props> = ({ stations }) => {
     return (
         <ul>
             {stations.map((station) => (

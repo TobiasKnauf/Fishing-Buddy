@@ -23,7 +23,7 @@ export default function Page() {
         <div>
             <MapChart />
             <Searchbar onSearchChange={setSearchTerm} />
-            <StationList stations={stations} />
+            {/* <StationList stations={stations} /> */}
         </div>
     )
 }
