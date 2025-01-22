@@ -1,3 +1,5 @@
+"use client"
+
 //styles
 import 'leaflet/dist/leaflet.css';
 import "../styles/leafletstyles.css"
@@ -17,7 +19,7 @@ import { MapEvents } from "./mapEvents";
 
 //-------------------------------------------------------------------
 
-export function SimpleMap() {
+export default function WaterMap() {
     const mapRef = useRef<Map>(null);
     const [stations, setStations] = useState<Station[]>([]);
 
