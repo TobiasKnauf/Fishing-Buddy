@@ -1,4 +1,7 @@
+//libraries
 import { FC } from "react";
+
+//feature libraries
 import { Station } from "../types/StationData";
 
 interface Props {

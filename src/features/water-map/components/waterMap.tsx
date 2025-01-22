@@ -44,15 +44,12 @@ export default function WaterMap() {
             {
                 mapRef.current != null &&
                 <MapEvents onStationUpdate={handleStationUpdate} mapRef={mapRef?.current} />
-
             }
-            <div id="stations-markers">
-                {
-                    stations.map((station) => (
-                        <StationMarker station={station} key={`${station.uuid} marker`} />
-                    ))
-                }
-            </div>
+            {
+                stations.map((station) => (
+                    <StationMarker station={station} key={`${station.uuid} marker`} />
+                ))
+            }
         </MapContainer>
     )
 }

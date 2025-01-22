@@ -3,11 +3,20 @@ import { Station } from "../types/StationData";
 
 const fetchUrl = "https://pegelonline.wsv.de/webservices/rest-api/v2/";
 
-export async function GetStations(): Promise<Station[]> {
-    const response = await fetch(`${fetchUrl}stations.json?includeTimeseries=true&includeCurrentMeasurement=true&includeCharacteristicValues=true`);
-    const data = await response.json() as Station[];
+let stationCache: Station[];
 
-    return data;
+export async function GetStations(force?: false): Promise<Station[]> {
+
+    if (force || stationCache == null || stationCache.length == 0) {
+        const response = await fetch(`${fetchUrl}stations.json?includeTimeseries=true&includeCurrentMeasurement=true&includeCharacteristicValues=true`);
+        const data = await response.json() as Station[];
+
+        stationCache = data;
+
+        return data;
+    }
+
+    return stationCache;
 }
 
 export async function GetStationsByWater(water: string): Promise<Station[]> {

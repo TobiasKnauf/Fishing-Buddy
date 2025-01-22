@@ -1,5 +1,8 @@
+//libraries
 import { useMapEvents } from "react-leaflet";
 import { LeafletEvent, Map } from "leaflet";
+
+//feature libraries
 import { GetStationsByCoords } from "../api/PegelOnlineUtils";
 import { Station } from "../types/StationData";
 
@@ -16,7 +19,7 @@ export function MapEvents({ mapRef, onStationUpdate }: EventProps) {
 
         const coords = e.target.getCenter();
         const bounds = mapRef.getBounds();
-        const distance = mapRef.distance(bounds.getNorthWest(), bounds.getNorthEast()) / 2;
+        const distance = mapRef.distance(bounds.getNorthWest(), bounds.getNorthEast()) / 1.5;
 
         const data = await GetStationsByCoords(coords, distance, mapRef);
         onStationUpdate(data);
