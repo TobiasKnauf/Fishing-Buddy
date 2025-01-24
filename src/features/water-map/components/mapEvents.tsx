@@ -6,12 +6,16 @@ import { LeafletEvent, Map } from "leaflet";
 import { GetStationsByCoords } from "../api/PegelOnlineUtils";
 import { Station } from "../types/StationData";
 
+//-------------------------------------------------------------------
+
 interface EventProps {
     mapRef: Map | null;
 
     //callback events
     onStationUpdate: (stations: Station[]) => void;
 }
+
+//-------------------------------------------------------------------
 
 export function MapEvents({ mapRef, onStationUpdate }: EventProps) {
     const handleMapChange = async (e: LeafletEvent) => {

@@ -3,9 +3,13 @@
 //libraries
 import { ChangeEvent, FC, useState } from "react";
 
+//-------------------------------------------------------------------
+
 interface Props {
     onSearchChange: (searchTerm: string) => void;
 }
+
+//-------------------------------------------------------------------
 
 export const Searchbar: FC<Props> = ({ onSearchChange }) => {
     const [searchTerm, setSearchTerm] = useState("");

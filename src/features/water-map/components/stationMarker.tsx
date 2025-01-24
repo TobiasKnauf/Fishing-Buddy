@@ -6,9 +6,13 @@ import { Marker, Popup } from "react-leaflet";
 //feature libraries
 import { Station } from "../types/StationData";
 
+//-------------------------------------------------------------------
+
 interface Props {
     station: Station;
 }
+
+//-------------------------------------------------------------------
 
 export const StationMarker: FC<Props> = ({ station }) => {
     if (station.longitude === undefined || station.latitude === undefined) return;
