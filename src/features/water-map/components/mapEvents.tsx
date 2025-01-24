@@ -1,10 +1,12 @@
 //libraries
 import { useMapEvents } from "react-leaflet";
-import { LeafletEvent, Map } from "leaflet";
+import { LatLng, LeafletEvent, Map } from "leaflet";
 
 //feature libraries
 import { GetStationsByCoords } from "../api/PegelOnlineUtils";
 import { Station } from "../types/StationData";
+import '../utils/leafletUtils'
+
 
 //-------------------------------------------------------------------
 
@@ -18,21 +20,43 @@ interface EventProps {
 //-------------------------------------------------------------------
 
 export function MapEvents({ mapRef, onStationUpdate }: EventProps) {
-    const handleMapChange = async (e: LeafletEvent) => {
-        if (!mapRef) return;
+    if (!mapRef) return;
 
-        const coords = e.target.getCenter();
-        const bounds = mapRef.getBounds();
-        const distance = mapRef.distance(bounds.getNorthWest(), bounds.getNorthEast()) / 1.5;
+    const bounds = mapRef.getBounds();
+    const mapRadius = mapRef.distance(bounds.getNorthWest(), bounds.getNorthEast()) / 1.5;
 
-        const data = await GetStationsByCoords(coords, distance, mapRef);
+    const updateStations = async (e: LeafletEvent) => {
+
+        const data = await GetStationsByCoords(e.target.getCenter(), mapRadius, mapRef);
         onStationUpdate(data);
     }
 
+    let startPos: LatLng;
+
     useMapEvents({
-        dragend: handleMapChange,
+        dragstart: (e) => {
+            startPos = e.target.getCenter();
+        },
+        dragend: (e) => {
+            updateStations(e);
+        },
+        drag: (e) => {
+            const currentPos = e.target.getCenter();
+
+            if (!startPos?.isValid() || !currentPos?.isValid()) return;
+            if (startPos.distanceTo(currentPos) < mapRadius) return;
+
+            updateStations(e);
+
+            startPos = e.target.getCenter();
+
+            console.log("Test");
+        },
+        zoom: (e) => {
+            updateStations(e);
+        },
         // zoomlevelschange: handleMapChange,
-        zoom: handleMapChange,
     })
     return null;
 }
+
