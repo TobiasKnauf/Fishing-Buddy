@@ -30,7 +30,7 @@ export async function GetStationsByWater(water: string): Promise<Station[]> {
 
 //-------------------------------------------------------------------
 
-export async function GetStationsByCoords(coordinates: LatLng, radiusInMeters: number, map: Map | null): Promise<Station[]> {
+export async function GetStationsByCoords(coordinates: LatLng, radiusInMeters: number, map: Map): Promise<Station[]> {
     if (!map) return [];
 
     const data = await GetStations();
@@ -45,5 +45,3 @@ export async function GetStationsByCoords(coordinates: LatLng, radiusInMeters: n
         }
     });
 }
-
-//-------------------------------------------------------------------

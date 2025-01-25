@@ -10,7 +10,7 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import { Map } from "leaflet";
 
 //feature libraries
-import { GetStations } from "../api/PegelOnlineUtils";
+import { GetStations } from "../api/pegelOnlineAccess";
 import { Station } from "../types/StationData";
 
 //components

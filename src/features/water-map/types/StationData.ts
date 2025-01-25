@@ -1,4 +1,4 @@
-export type Station = {
+export interface Station {
     uuid: string;
     number: string;
     shortname: string;
@@ -11,7 +11,7 @@ export type Station = {
     timeseries: Timeseries[];
 }
 
-export type Timeseries = {
+export interface Timeseries {
     shortname: string;
     longname: string;
     unit: string;
@@ -21,7 +21,7 @@ export type Timeseries = {
     characteristicValues: CharacteristicValue[];
 }
 
-export type CharacteristicValue = {
+export interface CharacteristicValue {
     shortname: string;
     longname: string;
     unit: string;
@@ -32,20 +32,20 @@ export type CharacteristicValue = {
     timespanEnd?: string;
 }
 
-export type GaugeZero = {
+export interface GaugeZero {
     unit: string;
     value: number;
     validFrom: string;
 }
 
-export type CurrentMeasurement = {
+export interface CurrentMeasurement {
     timestamp: string;
     value: number;
     stateMnwMhw: string;
     stateNswHsw: string;
 }
 
-export type Water = {
+export interface Water {
     shortname: string;
     longname: string;
 }

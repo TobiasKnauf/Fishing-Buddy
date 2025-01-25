@@ -3,9 +3,10 @@ import { useMapEvents } from "react-leaflet";
 import { LatLng, LeafletEvent, Map } from "leaflet";
 
 //feature libraries
-import { GetStationsByCoords } from "../api/PegelOnlineUtils";
-import { Station } from "../types/StationData";
 import '../utils/leafletUtils'
+import { GetStationsByCoords } from "../api/pegelOnlineAccess";
+import { Station } from "../types/StationData";
+import { ReduceStations } from "../utils/pegelOnlineUtils";
 
 
 //-------------------------------------------------------------------
@@ -23,12 +24,14 @@ export function MapEvents({ mapRef, onStationUpdate }: EventProps) {
     if (!mapRef) return;
 
     const bounds = mapRef.getBounds();
-    const mapRadius = mapRef.distance(bounds.getNorthWest(), bounds.getNorthEast()) / 1.5;
+    const mapDiameter = mapRef.distance(bounds.getNorthWest(), bounds.getNorthEast());
+    const mapRadius = mapDiameter / 1.5;
 
     const updateStations = async (e: LeafletEvent) => {
 
         const data = await GetStationsByCoords(e.target.getCenter(), mapRadius, mapRef);
-        onStationUpdate(data);
+        const reduced = ReduceStations(data, mapDiameter / 100);
+        onStationUpdate(reduced);
     }
 
     let startPos: LatLng;
@@ -44,19 +47,20 @@ export function MapEvents({ mapRef, onStationUpdate }: EventProps) {
             const currentPos = e.target.getCenter();
 
             if (!startPos?.isValid() || !currentPos?.isValid()) return;
-            if (startPos.distanceTo(currentPos) < mapRadius) return;
+            if (startPos.distanceTo(currentPos) < mapDiameter / 2) return;
 
             updateStations(e);
-
             startPos = e.target.getCenter();
-
-            console.log("Test");
         },
-        zoom: (e) => {
+        zoomend: (e) => {
             updateStations(e);
         },
+        zoomstart: (e) => {
+            updateStations(e);
+        }
         // zoomlevelschange: handleMapChange,
     })
+
     return null;
 }
 
