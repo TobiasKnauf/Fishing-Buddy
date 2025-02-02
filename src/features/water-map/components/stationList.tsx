@@ -3,6 +3,7 @@ import { FC } from "react";
 
 //feature libraries
 import { Station } from "../types/StationData";
+import { StationMarker } from "./stationMarker";
 
 //-------------------------------------------------------------------
 
@@ -12,12 +13,11 @@ interface Props {
 
 //-------------------------------------------------------------------
 
-export const StationList: FC<Props> = ({ stations }) => {
+
+export default function StationList({ stations }: Props) {
     return (
-        <ul>
-            {stations.map((station) => (
-                <li key={station.uuid}>{station.longname},{station.latitude},{station.longitude}</li>
-            ))}
-        </ul>
+        stations.map((station) => (
+            <StationMarker station={station} key={`${station.uuid} marker`} />
+        ))
     );
-};
+}

@@ -14,8 +14,8 @@ import { GetStations } from "../api/pegelOnlineAccess";
 import { Station } from "../types/StationData";
 
 //components
-import { StationMarker } from "./stationMarker";
 import { MapEvents } from "./mapEvents";
+import StationList from './stationList';
 
 //-------------------------------------------------------------------
 
@@ -45,11 +45,7 @@ export default function WaterMap() {
                 mapRef.current != null &&
                 <MapEvents onStationUpdate={handleStationUpdate} mapRef={mapRef?.current} />
             }
-            {
-                stations.map((station) => (
-                    <StationMarker station={station} key={`${station.uuid} marker`} />
-                ))
-            }
+            <StationList stations={stations} />
         </MapContainer>
     )
 }
